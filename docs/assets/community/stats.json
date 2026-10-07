@@ -1,6 +1,6 @@
 {
   "repository": "YuhaoYeSteve/embodied-data-generator",
-  "sampled_at": "2026-10-07T12:44:22Z",
+  "sampled_at": "2026-10-07T12:51:48Z",
   "source": "https://api.github.com/graphql",
   "stars": 0,
   "forks": 0,
@@ -8,10 +8,10 @@
   "issues": 0,
   "pull_requests": 0,
   "ci": {
-    "label": "not run",
-    "status": "not_run",
-    "conclusion": null,
-    "run_url": null,
-    "head_sha": null
+    "label": "passed",
+    "status": "completed",
+    "conclusion": "success",
+    "run_url": "https://github.com/YuhaoYeSteve/embodied-data-generator/actions/runs/37623783940",
+    "head_sha": "1425b0c752f948abe31e3c9980e9fccf525ef7d9"
   }
 }
