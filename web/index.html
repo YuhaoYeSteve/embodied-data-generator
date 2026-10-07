@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7f3">
+  <title>Seedance Pipeline · 具身数据工作台</title>
+  <meta name="description" content="描述场景、检查脚本、跟踪生成批次，并检索和复用完成的视频。">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css?v=20261007a">
+  <script src="/app.js?v=20261007a" defer></script>
+  <script src="/generation.js?v=20261007a" defer></script>
+  <script src="/board.js?v=20261007a" defer></script>
+  <script src="/library.js?v=20261007a" defer></script>
+  <script src="/navigation.js?v=20261007a" defer></script>
+  <script src="/boot.js?v=20261007a" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#workspace-main">跳转到工作台</a>
+<svg class="svg-library" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+  <symbol id="icon-edit" viewBox="0 0 24 24"><path d="m16 3 5 5-12 12H4v-5ZM13 6l5 5M4 4h5M3 9V4h1"/></symbol>
+  <symbol id="icon-film" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 3v18M17 3v18M3 8h4M3 16h4M17 8h4M17 16h4"/><path d="m10 9 5 3-5 3Z"/></symbol>
+  <symbol id="icon-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16"/><rect x="7" y="4" width="4" height="6" rx="1"/><rect x="14" y="14" width="4" height="6" rx="1"/></symbol>
+  <symbol id="icon-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 7v5h-5M4 17v-5h5M6.2 6.2A8 8 0 0 1 19.5 10M4.5 14A8 8 0 0 0 17.8 17.8"/></symbol>
+  <symbol id="icon-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+  <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  <symbol id="icon-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="icon-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="icon-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="icon-play" viewBox="0 0 24 24"><path d="m8 4 13 8-13 8Z"/></symbol>
+  <symbol id="icon-pause" viewBox="0 0 24 24"><path d="M8 5v14M16 5v14"/></symbol>
+  <symbol id="icon-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/></symbol>
+  <symbol id="icon-file" viewBox="0 0 24 24"><path d="M13 3H5v18h14V9ZM13 3v6h6M8 13h8M8 17h6"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  <symbol id="icon-alert" viewBox="0 0 24 24"><path d="m12 3 10 18H2Z"/><path d="M12 9v5M12 17v.1"/></symbol>
+  <symbol id="icon-upload" viewBox="0 0 24 24"><path d="M12 16V3m-5 5 5-5 5 5M4 16v5h16v-5"/></symbol>
+</svg>
+<div class="app-shell">
+  <aside class="sidebar" aria-label="工作区导航">
+    <a class="brand" href="/" aria-label="Seedance Pipeline 首页"><strong>Seedance</strong><span>PIPELINE</span></a>
+    <div class="sidebar-label">具身数据工作台</div>
+    <nav aria-label="主导航">
+      <button type="button" class="nav-button" id="nav-create" data-page="create"><svg class="icon"><use href="#icon-edit"/></svg><span>生成中心</span></button>
+      <button type="button" class="nav-button active" id="nav-board" data-page="board" aria-current="page"><svg class="icon"><use href="#icon-grid"/></svg><span>流程看板</span></button>
+      <button type="button" class="nav-button" id="nav-library" data-page="library"><svg class="icon"><use href="#icon-film"/></svg><span>成品库</span><span class="nav-dot" id="outputs-dot" hidden></span></button>
+    </nav>
+    <div class="sidebar-bottom"><button type="button" class="nav-button" id="open-settings"><svg class="icon"><use href="#icon-settings"/></svg><span>设置</span></button><span class="local-label">本地工作空间<br><span>SCENARIO → VIDEO</span></span></div>
+  </aside>
+  <main class="main-content" id="workspace-main">
+    <header class="workspace-header">
+      <div><div class="eyebrow">SEEDANCE / WORKSPACE</div><h1 id="workspace-title">流程看板</h1><p class="header-description" id="workspace-description">关注批次推进与异常，选择视频任务查看分段与质检记录。</p></div>
+      <div class="header-actions"><button type="button" class="button button-quiet icon-only" id="refresh" title="刷新任务" aria-label="刷新任务"><svg class="icon"><use href="#icon-refresh"/></svg></button><button type="button" class="button button-primary" id="new-batch" disabled><svg class="icon"><use href="#icon-plus"/></svg>生成新视频</button></div>
+    </header>
+    <div class="workspace-connection"><div class="connection-status"><i class="status-dot" id="connection-dot"></i><span id="connection-text">连接中</span><span id="last-updated">读取本地任务</span></div><span class="connection-caption">本地生成 · 自动质检 · 全程留档</span></div>
+    <div class="connection-alert" id="connection-alert" role="alert" hidden><svg class="icon"><use href="#icon-alert"/></svg><div><strong id="connection-title">暂时无法连接本地服务</strong><p id="connection-message"></p><code>python3 -B studio_server.py --open</code></div><button type="button" class="button button-small" id="reconnect">重新连接</button></div>
+    <div class="simulation-notice" id="simulation-notice" hidden>当前为模拟运行环境，生成结果用于流程验证，不调用付费模型。</div>
+
+    <section id="page-create" class="workspace-page generation-page" aria-label="生成中心" hidden>
+      <section id="batch-dialog" class="generation-workspace" aria-labelledby="batch-dialog-title">
+        <div class="generation-toolbar">
+          <div><h2 id="batch-dialog-title" class="visually-hidden">创建生成批次</h2><span id="draft-save-status" class="draft-save-status" aria-live="polite">草稿保存在当前浏览器</span></div>
+          <div class="generation-draft-actions"><label id="generation-drafts-control" class="draft-picker"><span class="visually-hidden">选择已保存草稿</span><select id="generation-draft-select" aria-label="选择已保存草稿"><option value="">当前草稿</option></select></label><button type="button" class="button" id="generation-new">新建草稿</button><button type="button" class="button" id="generation-save"><svg class="icon"><use href="#icon-file"/></svg>保存草稿</button></div>
+        </div>
+        <nav class="generation-stepper" aria-label="生成步骤"><button type="button" class="generation-step active" data-generation-step="1" aria-current="step"><span>1</span>描述与配置</button><svg class="icon"><use href="#icon-chevron"/></svg><button type="button" class="generation-step" data-generation-step="2"><span>2</span>检查脚本</button></nav>
+        <p id="generation-reuse-note" class="generation-reuse-note" role="status" hidden></p>
+        <form id="batch-form" novalidate>
+          <div class="dialog-body generation-body">
+            <section id="generation-step-input" aria-label="第一步：描述与配置">
+              <div class="generation-columns">
+                <section id="creative-inputs" class="generation-input-group" aria-labelledby="creative-inputs-title">
+                  <div class="form-section-title"><div><span class="eyebrow">创作输入</span><h3 id="creative-inputs-title">把任务描述清楚</h3></div></div>
+                  <p class="section-description">填写场景和动作目标，或复用已有模板与脚本。</p>
+                  <label class="field batch-name-field">批次名称<input name="name" id="batch-name" required maxlength="100" placeholder="例如：厨房物体整理 · 第一批"></label>
+                  <div class="creation-modes" role="tablist" aria-label="脚本来源"><button type="button" id="scenario-mode-tab" role="tab" aria-selected="true" aria-controls="scenario-mode-pane" class="active">描述场景</button><button type="button" id="legacy-mode-tab" role="tab" aria-selected="false" aria-controls="legacy-mode-pane" tabindex="-1">模板与 JSON</button></div>
+                  <section id="scenario-mode-pane" role="tabpanel" aria-labelledby="scenario-mode-tab" class="form-section">
+                    <label class="field">场景与任务目标<textarea id="scenario-description" rows="6" minlength="8" maxlength="4000" required placeholder="例如：第一视角在厨房台面上，将杯子、碗和餐具分类，移到对应收纳区。保持手部与物体接触清晰，展示抓取、移动、放置的完整过程。"></textarea><small>写清环境、参与者、物体和任务目标，至少 8 个字。</small></label>
+                    <div class="scenario-examples" aria-label="填写场景示例"><span>快速填写</span><button type="button" data-scenario-example="kitchen">厨房整理</button><button type="button" data-scenario-example="warehouse">仓库分拣</button><button type="button" data-scenario-example="service">服务交互</button></div>
+                    <label class="field">任务类型<select id="scenario-task-type"><option value="manipulation">物体操作 · 抓取、移动与整理</option><option value="interaction">服务交互 · 沟通、协作与交接</option></select></label>
+                    <label class="field">多样性要求 <span class="optional">选填</span><textarea id="scenario-diversity" rows="3" maxlength="2000" placeholder="不同物体组合、摆放位置、操作路径或环境光线"></textarea></label>
+                  </section>
+                  <section id="legacy-mode-pane" role="tabpanel" aria-labelledby="legacy-mode-tab" class="form-section" hidden>
+                    <label class="field">场景模板<select name="template_id" id="template-select"></select></label>
+                    <div class="template-summary"><svg class="icon"><use href="#icon-film"/></svg><div><strong id="template-summary-title">正在读取模板</strong><p id="template-summary-description"></p></div><span class="template-duration" id="template-duration">—</span></div>
+                    <label class="field">每条视频的差异要求 <span class="optional">选填</span><textarea name="variations" id="variations" rows="3" placeholder="一行对应一条视频的物体、环境或动作差异"></textarea><small>行数不一致时，全部差异要求应用于每条视频。</small></label>
+                    <div class="script-toolbar"><div><strong>完整场景 JSON</strong><p>载入模板或导入本地脚本后，可直接编辑。</p></div><div><button type="button" class="button button-small" id="edit-template">载入模板</button><label class="button button-small file-button"><svg class="icon"><use href="#icon-upload"/></svg>导入 JSON<input id="import-spec" type="file" accept=".json,application/json" class="visually-hidden"></label></div></div>
+                    <textarea id="custom-spec" rows="9" class="code-input" spellcheck="false" aria-label="自定义场景 JSON" placeholder="留空使用所选模板；也可导入 JSON 后直接编辑。"></textarea><div class="script-status" id="script-status" aria-live="polite">使用所选模板的分段时长。</div>
+                  </section>
+                  <section id="generation-reference-inputs" class="generation-reference-inputs" aria-label="参考素材">
+                    <section id="script-references" class="script-references" aria-labelledby="script-references-heading" hidden><h3 id="script-references-heading">脚本参考图</h3><div id="reference-images-list"></div><div id="reference-images-warnings" aria-live="polite"></div></section>
+                  </section>
+                </section>
+                <aside id="video-parameters" class="generation-parameter-group" aria-labelledby="video-parameters-title">
+                  <div class="form-section-title"><div><span class="eyebrow">视频参数</span><h3 id="video-parameters-title">设置输出规格</h3></div></div>
+                  <p class="section-description">这些参数会应用到本批次的生成任务。</p>
+                  <label class="field">视频模型<select id="batch-model-family" required aria-describedby="model-capability-note"></select></label>
+                  <p id="model-capability-note" class="model-capability-note" aria-live="polite">正在读取模型能力…</p>
+                  <label class="field">输出分辨率<select name="resolution" id="batch-resolution" aria-describedby="reference-resolution-hint" required></select><small id="reference-resolution-hint" class="reference-resolution-hint" hidden>手机订单参考建议选择 720p 或以上，便于观察屏幕布局。</small></label>
+                  <div class="form-grid parameter-grid">
+                    <label class="field" data-creation-mode="scenario">每条视频时长<select id="scenario-duration"><option value="60">60 秒</option><option value="90">90 秒</option><option value="120">120 秒</option><option value="180">180 秒</option></select></label>
+                    <div class="field" data-creation-mode="legacy" hidden>每条视频时长<output id="legacy-duration-summary" class="parameter-readonly">按脚本分段累加</output></div>
+                    <label class="field">扩写单段时长<select id="batch-segment-duration" required></select></label>
+                  </div>
+                  <p class="form-note parameter-note">已有脚本按各分段时长生成。</p>
+                  <p id="segment-planning-hint" class="script-status" aria-live="polite"></p>
+                  <label class="field" data-creation-mode="scenario">扩展脚本数<input id="scenario-quantity" type="number" min="1" max="6" step="1" value="3" required><small>1–6 条，下一步可单独编辑与选择。</small></label>
+                  <label class="field" data-creation-mode="legacy" hidden>视频数量<input name="quantity" id="batch-quantity" type="number" min="1" max="20" step="1" required value="1" disabled></label>
+                  <label class="field">并行视频数<select name="concurrency" id="batch-concurrency"><option value="1">1 条 · 依次生成</option><option value="2">2 条 · 并行生成</option><option value="3">3 条 · 并行生成</option></select></label>
+                  <details class="advanced-section" id="advanced-section"><summary>高级配置<span>Profile</span></summary><div class="advanced-content"><label class="field">ArkCLI Profile <span class="optional">选填</span><input id="batch-profile" placeholder="使用服务端默认 Profile" autocomplete="off"></label><p class="form-note">沿用本机 ArkCLI 认证。</p></div></details>
+                  <div class="automatic-note"><svg class="icon"><use href="#icon-check"/></svg><p>生成后自动质检，检查结果与运行记录保留在流程看板。</p></div>
+                  <span id="production-step" hidden>02</span>
+                </aside>
+              </div>
+              <div id="scenario-status" class="scenario-status" role="status" aria-live="polite" hidden></div><div class="form-error" id="scenario-error" role="alert" hidden></div>
+              <footer class="generation-input-footer"><div data-creation-mode="scenario"><strong>准备好后，先检查脚本</strong><p id="planner-cost-note">扩展仅调用文本模型，可能产生文本模型费用；此时不会生成视频。</p></div><div data-creation-mode="legacy" hidden><strong>核对已有脚本</strong><p>下一步检查分段内容与输出参数，再开始生成。</p></div><button type="button" class="button button-primary" id="expand-scenario" data-creation-mode="scenario">扩写并检查脚本<svg class="icon"><use href="#icon-arrow"/></svg></button><button type="button" class="button button-primary" id="generation-next" data-creation-mode="legacy" hidden>检查脚本<svg class="icon"><use href="#icon-arrow"/></svg></button></footer>
+            </section>
+            <section id="generation-step-review" aria-label="第二步：检查脚本" hidden>
+              <div class="review-intro"><div><h3>检查即将生成的内容</h3><p>编辑分段、确认差异，并选择本次要生成的脚本。</p></div><span id="selected-production-count" class="review-selection">等待选择脚本</span></div>
+              <div id="generation-summary" class="generation-summary" aria-label="本批次参数摘要"></div>
+              <section id="scenario-drafts" class="scenario-drafts" aria-labelledby="drafts-heading" hidden><div class="drafts-heading"><div><div class="form-section-title"><h3 id="drafts-heading">选择与编辑脚本</h3></div><p id="drafts-summary"></p></div><div class="draft-selection-actions"><button type="button" class="text-button" id="select-all-drafts">全选</button><button type="button" class="text-button" id="clear-drafts-selection">清空选择</button></div></div><p class="annotation-note">动作标签与状态描述是脚本规划，需在成片质检后确认。</p><div id="drafts-list"></div></section>
+              <section id="legacy-review" class="legacy-review" aria-label="模板与 JSON 脚本检查" hidden></section>
+              <div class="estimate-panel" id="estimate-panel"><div><span class="eyebrow">费用参考</span><strong id="estimate-total">生成时自动估算</strong><p id="estimate-description">可提前查看费用，也可直接开始生成。文本扩展费用另计。</p></div><button type="button" class="button" id="estimate-button">查看费用估算</button><div id="estimate-jobs" class="estimate-jobs" hidden></div></div>
+              <footer class="generation-review-footer"><span id="create-hint">点击开始即提交生成，费用自动估算并展示。</span><div><button type="button" class="button" id="generation-back">返回描述与配置</button><button type="submit" class="button button-primary" id="create-batch" disabled><svg class="icon"><use href="#icon-play"/></svg>开始生成</button></div></footer>
+            </section>
+            <div class="form-error" id="batch-error" role="alert" hidden></div>
+          </div>
+        </form>
+      </section>
+    </section>
+
+    <section id="page-board" class="workspace-page board-page" aria-label="流程看板">
+      <section id="board-metrics" class="metrics-strip" aria-label="生产概况">
+        <div class="metric"><span class="metric-label">视频任务</span><div><strong id="metric-total">—</strong><span>条</span></div></div>
+        <div class="metric"><span class="metric-label"><i class="status-dot green"></i>正在生产</span><div><strong id="metric-running">—</strong><span>条</span></div></div>
+        <div class="metric"><span class="metric-label"><i class="status-dot amber"></i>自动质检中</span><div><strong id="metric-review">—</strong><span>条</span></div></div>
+        <div class="metric metric-cost"><span class="metric-label">累计生成费用</span><div><strong id="metric-cost">—</strong><span>CNY</span></div></div>
+      </section>
+      <section class="batch-panel" aria-labelledby="batch-list-heading">
+        <div class="section-heading"><div><h2 id="batch-list-heading">生成批次</h2><p>按批次跟踪进度，展开查看具体视频任务。</p></div><span class="subtle-label">实时同步</span></div>
+        <div class="workspace-filters board-filters"><label class="search-field"><svg class="icon"><use href="#icon-search"/></svg><input id="board-search" type="search" placeholder="搜索批次、视频名称或任务 ID" aria-label="搜索批次或视频任务"></label><label class="filter-field"><span>状态</span><select id="board-filter"><option value="all">全部状态</option><option value="running">进行中</option><option value="attention">需关注</option><option value="completed">已完成</option></select></label><label class="filter-field"><span>批次</span><select id="board-batch-filter"><option value="all">全部批次</option></select></label></div>
+        <div id="batch-list" class="batch-list" aria-live="polite"></div>
+        <div id="board-empty" class="workspace-empty"><svg class="icon"><use href="#icon-grid"/></svg><h3>还没有生成批次</h3><p>从生成中心描述场景、检查脚本后，即可开始生成。</p><button type="button" class="button" data-page="create">前往生成中心<svg class="icon"><use href="#icon-arrow"/></svg></button></div>
+        <div class="queue-footnote"><svg class="icon"><use href="#icon-clock"/></svg><span>每 3 秒同步 · 批次内并行，分段间串行</span></div>
+      </section>
+      <section id="batch-focus" class="batch-focus" aria-labelledby="batch-focus-title" hidden><div><span class="eyebrow">批次中的视频</span><h2 id="batch-focus-title"></h2><p id="batch-focus-meta"></p></div><span class="count-label" id="task-count">0</span></section>
+      <div id="batch-jobs" class="batch-jobs" aria-live="polite"></div>
+      <section id="board-detail" class="detail-panel" aria-label="视频任务详情" hidden>
+        <div class="detail-section-toolbar"><span class="eyebrow">视频任务详情</span><div><button type="button" class="button button-small" id="board-result" hidden>在成品库打开<svg class="icon"><use href="#icon-arrow"/></svg></button><button type="button" class="button button-small button-quiet" id="board-close-detail"><svg class="icon"><use href="#icon-close"/></svg>收起详情</button></div></div>
+        <div id="detail-empty" class="detail-empty"><div class="empty-visual"><svg class="icon"><use href="#icon-film"/></svg><span class="empty-visual-line"></span></div><span class="eyebrow">FROM SCENARIO TO DATA</span><h2>从一个场景，生成多样数据。</h2><p>描述需要完成的任务，扩展不同物体、环境和动作路径。<br>选择脚本与模型后，即可逐段生成、自动质检并导出。</p><button class="button button-primary" id="empty-new-batch" disabled><svg class="icon"><use href="#icon-plus"/></svg>新建数据批次</button><div class="empty-process"><span>描述场景</span><svg class="icon"><use href="#icon-arrow"/></svg><span>扩展与编辑脚本</span><svg class="icon"><use href="#icon-arrow"/></svg><span>生成与自动质检</span></div></div>
+        <div id="detail-content" hidden>
+          <div class="detail-heading"><div><div class="detail-kicker"><span id="detail-batch">视频任务</span><span class="readonly-label" id="read-only-label" hidden>历史记录 · 只读</span></div><h2 id="detail-title"></h2></div><span id="detail-status" class="status-badge"></span></div>
+          <div class="video-frame" id="video-frame"><video id="preview-video" controls preload="metadata" playsinline hidden aria-label="视频预览"></video><div class="video-placeholder" id="video-placeholder"><svg class="icon"><use href="#icon-film"/></svg><strong id="preview-empty-title">视频尚未生成</strong><span id="preview-empty-description">生成完成后，视频将在这里显示。</span></div><span class="preview-label" id="preview-label" hidden></span></div>
+          <div class="preview-toolbar"><div class="preview-facts"><span id="detail-duration">—</span><i></i><span id="detail-resolution">—</span><i></i><span id="detail-cost">—</span></div><div class="preview-downloads"><button class="text-button" id="show-full-preview" hidden>返回完整预览</button><a class="text-button" id="download-video" hidden download><svg class="icon"><use href="#icon-download"/></svg>下载视频</a><a class="text-button" id="download-metadata" download><svg class="icon"><use href="#icon-file"/></svg>记录</a></div></div>
+          <div class="job-error" id="job-error" role="alert" hidden></div>
+          <div class="production-progress"><div class="progress-heading"><strong>生产进度 <span id="detail-progress">0%</span></strong><span id="detail-completed-seconds">0 / 0 秒</span></div><div class="timeline" id="segment-timeline" aria-label="分段进度"></div><div class="progress-foot"><span id="detail-phase"></span><div id="job-actions"></div></div></div>
+          <div class="detail-tabs" role="tablist" aria-label="任务详情"><button id="segments-tab" class="active" role="tab" aria-selected="true" aria-controls="segments-pane">分段与质检 <span id="segment-count">0</span></button><button id="logs-tab" role="tab" aria-selected="false" aria-controls="logs-pane">运行记录</button></div>
+          <div id="segments-pane" role="tabpanel" aria-labelledby="segments-tab"><div id="segments-list" class="segments-list"></div></div>
+          <div id="logs-pane" role="tabpanel" aria-labelledby="logs-tab" hidden><div id="logs-list" class="logs-list"></div></div>
+        </div>
+      </section>
+    </section>
+
+    <section id="page-library" class="workspace-page library-page" aria-label="成品库" hidden>
+      <div class="section-heading"><div><h2>已完成的视频</h2><p>检索、预览、下载，或复用配置继续创作。</p></div><span class="library-count" id="library-count">0 条成品</span></div>
+      <div class="workspace-filters library-filters"><label class="search-field"><svg class="icon"><use href="#icon-search"/></svg><input id="library-search" type="search" placeholder="搜索视频、批次或标签" aria-label="搜索成品"></label><label class="filter-field"><span>模型</span><select id="library-model"><option value="all">全部模型</option></select></label><label class="filter-field"><span>分辨率</span><select id="library-resolution"><option value="all">全部分辨率</option></select></label><label class="filter-field"><span>批次</span><select id="library-batch"><option value="all">全部批次</option></select></label></div>
+      <div id="library-grid" class="library-grid" aria-live="polite"></div>
+      <div id="library-empty" class="workspace-empty"><svg class="icon"><use href="#icon-film"/></svg><h3>成品会保存在这里</h3><p>完成生成与质检的视频会自动进入成品库，保留来源与生成参数。</p></div>
+      <section id="library-detail" class="library-detail" aria-label="成品详情" hidden>
+        <div class="detail-section-toolbar"><span class="eyebrow">成品预览</span><button type="button" class="button button-small button-quiet" id="library-close-detail"><svg class="icon"><use href="#icon-close"/></svg>收起详情</button></div>
+        <div class="library-detail-layout"><div class="library-player"><video id="library-video" controls preload="metadata" playsinline aria-label="完整成品预览"></video><div id="library-error" class="form-error" role="alert" hidden></div></div><div class="library-detail-content"><h2 id="library-title"></h2><div id="library-facts" class="library-facts"></div><div id="library-tags" class="library-tags"></div><div class="library-downloads"><a id="library-download-video" class="button button-primary" download><svg class="icon"><use href="#icon-download"/></svg>下载视频</a><a id="library-download-metadata" class="button" download><svg class="icon"><use href="#icon-file"/></svg>下载元数据</a></div><div class="library-reuse-actions"><button type="button" id="library-reuse" class="button">复用配置生成</button><button type="button" id="library-trace" class="text-button">查看来源任务<svg class="icon"><use href="#icon-arrow"/></svg></button></div></div></div>
+      </section>
+    </section>
+    <footer class="workspace-footer"><span>Seedance Pipeline</span><span>具身数据生成工作空间</span></footer>
+  </main>
+</div>
+<dialog id="settings-dialog" class="studio-dialog settings-dialog" aria-labelledby="settings-title">
+  <form id="settings-form">
+    <header class="dialog-header"><div><span class="eyebrow">STUDIO SETTINGS</span><h2 id="settings-title">工作台设置</h2><p>查看本地环境，保存新批次的默认配置。</p></div><button type="button" class="button icon-only button-quiet" data-close="settings-dialog" aria-label="关闭设置"><svg class="icon"><use href="#icon-close"/></svg></button></header>
+    <div class="dialog-body"><h3 class="settings-subtitle">本地环境</h3><div id="environment-list" class="environment-list"></div><h3 class="settings-subtitle">默认生产配置</h3>
+      <div class="form-grid"><label class="field">视频模型<select id="default-model-family" required></select></label><label class="field">分辨率<select id="default-resolution" required></select></label><label class="field">并行数<select id="default-concurrency"><option value="1">1 条</option><option value="2">2 条</option><option value="3">3 条</option></select></label></div>
+      <p class="form-note">默认配置保存在当前浏览器。所有新任务自动质检，费用按所选模型估算。</p><div class="form-error" id="settings-error" role="alert" hidden></div>
+    </div><footer class="dialog-footer"><span>仅影响之后新建的批次</span><button type="submit" class="button button-primary">保存设置</button></footer>
+  </form>
+</dialog>
+
+<div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

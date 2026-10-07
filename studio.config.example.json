@@ -1,0 +1,13 @@
+{
+  "video_profile": "default",
+  "planner_profile": "",
+  "review_profile": "",
+  "planner_model": "",
+  "review_model": "",
+  "video_models": {
+    "seedance-2.0": "doubao-seedance-2-0-260128",
+    "seedance-2.5": "doubao-seedance-2-5-260628"
+  },
+  "video_prices_cny_per_1k_tokens": {},
+  "review_prices_cny_per_1m_tokens": {}
+}

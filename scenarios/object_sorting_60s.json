@@ -1,0 +1,86 @@
+{
+  "name": "桌面物品分类 · 60秒",
+  "version": "1",
+  "target_duration_seconds": 60,
+  "global_prompt": "第一人称操作视角，镜头保持自然视线高度。工作台、光照和物体外观始终一致。仅操作者双手入镜，动作平稳连续；无剪辑跳转，不增减物体，不生成任何个人资料。展示抓取、移动、放下和松手的全过程，保留自然环境声。",
+  "dataset": {
+    "task_type": "manipulation",
+    "task_label": "桌面物品分类",
+    "source_scenario": "把工作台上的红色方块、蓝色球体和黄色圆柱依次放入三个托盘。",
+    "objects": [
+      "红色方块",
+      "蓝色球体",
+      "黄色圆柱",
+      "托盘"
+    ],
+    "annotation_scope": "planned"
+  },
+  "segments": [
+    {
+      "id": "01_inspect",
+      "name": "观察与准备",
+      "duration": 15,
+      "prompt": "从第一人称观察工作台，把混放的三个道具轻轻分开，依次指出左、中、右三个空托盘。完整展示手部移动和接触，不提前把道具放入托盘。",
+      "expected_start_state": "三个几何道具散放于工作台中部，左、中、右三个托盘为空。",
+      "expected_end_state": "三个几何道具已分开摆在桌面中部便于抓取，三个托盘仍为空，双手空闲。",
+      "required_actions": [
+        "观察布局",
+        "分开物体"
+      ],
+      "action_labels": [
+        "inspect"
+      ]
+    },
+    {
+      "id": "02_sort_cube",
+      "name": "方块归位",
+      "duration": 15,
+      "prompt": "抓住红色方块并稳定抬起，将方块移入左侧托盘，轻放后松手，收回手掌。蓝色球体和黄色圆柱保持原位。",
+      "expected_start_state": "三个几何道具已分开摆在桌面中部便于抓取，三个托盘仍为空，双手空闲。",
+      "expected_end_state": "红色方块已放入左侧托盘，蓝色球体和黄色圆柱留在桌面中部，双手空闲。",
+      "required_actions": [
+        "抓取方块",
+        "移动方块",
+        "放下方块",
+        "松手"
+      ],
+      "action_labels": [
+        "grasp_place"
+      ]
+    },
+    {
+      "id": "03_sort_sphere",
+      "name": "球体归位",
+      "duration": 15,
+      "prompt": "抓住蓝色球体并稳定抬起，将球体移入中间托盘，轻放后松手并观察其稳定。左侧方块和桌面圆柱保持原位。",
+      "expected_start_state": "红色方块已放入左侧托盘，蓝色球体和黄色圆柱留在桌面中部，双手空闲。",
+      "expected_end_state": "红色方块在左侧托盘、蓝色球体在中间托盘，黄色圆柱留在桌面中部，双手空闲。",
+      "required_actions": [
+        "抓取球体",
+        "移动球体",
+        "放下球体",
+        "松手"
+      ],
+      "action_labels": [
+        "grasp_place"
+      ]
+    },
+    {
+      "id": "04_sort_cylinder",
+      "name": "圆柱归位与复核",
+      "duration": 15,
+      "prompt": "抓住黄色圆柱并稳定抬起，将圆柱竖直放入右侧托盘后松手。依次检查三个托盘，确认物品归位，双手收回。",
+      "expected_start_state": "红色方块在左侧托盘、蓝色球体在中间托盘，黄色圆柱留在桌面中部，双手空闲。",
+      "expected_end_state": "红色方块、蓝色球体和黄色圆柱分别位于左、中、右托盘，桌面中部清空，双手空闲。",
+      "required_actions": [
+        "抓取圆柱",
+        "移动圆柱",
+        "放下圆柱",
+        "检查归位"
+      ],
+      "action_labels": [
+        "grasp_place_check"
+      ]
+    }
+  ]
+}
