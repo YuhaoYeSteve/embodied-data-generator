@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Documentation / 使用文档
+    url: https://github.com/YuhaoYeSteve/embodied-data-generator#readme
+    about: Setup, supported models, workflow, and data boundaries / 安装、模型能力、流程与数据边界

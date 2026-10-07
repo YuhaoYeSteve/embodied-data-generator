@@ -1,0 +1,10 @@
+{
+  "repository": "YuhaoYeSteve/embodied-data-generator",
+  "sampling": "Daily UTC snapshots; no data before the first observation.",
+  "samples": [
+    {
+      "date": "2026-10-07",
+      "stars": 0
+    }
+  ]
+}

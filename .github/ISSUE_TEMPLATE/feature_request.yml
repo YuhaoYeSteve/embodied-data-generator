@@ -1,0 +1,28 @@
+name: Feature request / 功能建议
+description: Suggest an improvement with a concrete use case / 提出具体场景与改进建议
+title: "[Feature] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        English and Chinese are both welcome. Check existing issues for related ideas before opening a new request.
+        欢迎用中文或英文说明；提交前可以先查看是否有相关议题。
+  - type: textarea
+    id: use-case
+    attributes:
+      label: Use case / 使用场景
+      description: What are you trying to accomplish, and where does the current workflow fall short?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior / 期望的行为
+      description: Describe the input, expected result, and how someone would use the feature.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives and context / 替代方案与补充信息
+      description: Include workarounds, examples, or relevant public documentation. Remove private data and credentials.

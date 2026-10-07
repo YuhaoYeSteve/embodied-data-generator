@@ -1,14 +1,26 @@
 <div align="center">
+  <img src="docs/assets/project-banner.svg" alt="Embodied Intelligence Data Generator: plan, generate, verify and export" width="1120">
   <h1>具身智能数据生成器</h1>
-  <p><strong>任务规划 · 连续视频 · 自动质检 · 可追溯数据</strong></p>
+  <p><strong>把任务描述变成连续视频与可追溯的具身数据。</strong></p>
   <p><a href="README.md">简体中文</a> · <a href="README.en.md">English</a></p>
+  <p>
+    <a href="LICENSE"><img src="docs/assets/badges/license.svg" alt="License: Apache-2.0" height="28"></a>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/ci.yml"><img src="docs/assets/community/ci.svg" alt="Latest CI status" height="28"></a>
+  </p>
   <p>
     <img src="docs/assets/badges/python.svg" alt="Python 3.9+" height="28">
     <img src="docs/assets/badges/flask.svg" alt="Flask 3.x" height="28">
     <img src="docs/assets/badges/seedance.svg" alt="Seedance 2.0 / 2.5" height="28">
     <img src="docs/assets/badges/ffmpeg.svg" alt="FFmpeg Media" height="28">
   </p>
-  <p><a href="#quick-start">快速开始</a> · <a href="#configuration">配置</a> · <a href="#workflow">生成流程</a> · <a href="#architecture">系统架构</a></p>
+  <p>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/stargazers"><img src="docs/assets/community/stars.svg" alt="GitHub Stars" height="28"></a>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/forks"><img src="docs/assets/community/forks.svg" alt="GitHub Forks" height="28"></a>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/watchers"><img src="docs/assets/community/watchers.svg" alt="GitHub Watchers" height="28"></a>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/issues"><img src="docs/assets/community/issues.svg" alt="Open issues" height="28"></a>
+    <a href="https://github.com/YuhaoYeSteve/embodied-data-generator/pulls"><img src="docs/assets/community/pull-requests.svg" alt="Open pull requests" height="28"></a>
+  </p>
+  <p><a href="#quick-start">快速开始</a> · <a href="#architecture">系统架构</a> · <a href="#community">参与贡献</a> · <a href="#star-history">Star History</a> · <a href="#license">许可证</a></p>
 </div>
 
 ---
@@ -206,3 +218,37 @@ node --test tests/test_studio_frontend.js tests/test_workspace_core.js tests/tes
 ```
 
 调整模型能力时，应同步检查 `studio_models.py`、请求适配、脚本规划及前后端参数校验。修改自动质检或恢复策略时，应验证已有任务与候选记录的兼容性。
+
+<a id="community"></a>
+
+## 社区与贡献
+
+如果这个项目对你有帮助，欢迎 Star；在仓库右上角选择 **Watch → Custom**，可以按需订阅 Issues、Pull requests 等活动。
+
+| 我想…… | 从这里开始 |
+| --- | --- |
+| 支持或收藏项目 | [在 GitHub 查看项目](https://github.com/YuhaoYeSteve/embodied-data-generator)，点击 Star |
+| 报告问题 | [提交 Bug](https://github.com/YuhaoYeSteve/embodied-data-generator/issues/new?template=bug_report.yml)，附上可复现步骤 |
+| 提出想法 | [功能建议](https://github.com/YuhaoYeSteve/embodied-data-generator/issues/new?template=feature_request.yml) |
+| 改进代码或文档 | 阅读 [贡献指南](CONTRIBUTING.md)，然后提交 Pull request |
+| 查看测试情况 | [CI 运行记录](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/ci.yml) |
+
+欢迎贡献通用场景模板、模型适配、连续性与质量检查改进、交互体验和文档翻译。示例素材与日志请使用可以公开分享的内容。
+
+<a id="star-history"></a>
+
+## Star History
+
+<p align="center"><a href="https://github.com/YuhaoYeSteve/embodied-data-generator/stargazers"><img src="docs/assets/community/star-history.svg" alt="Star 总数的每日采样历史" width="960"></a></p>
+
+社区徽章和增长图使用 GitHub 的真实统计，每日自动更新，也可[手动刷新](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml)。图表从首次采样开始记录 Star 总数；CI 徽章反映最近一次实际测试的结果。统计资产保存在仓库内，私有仓库也可以正常显示。
+
+<a id="license"></a>
+
+## 许可证
+
+项目源码采用 [Apache License 2.0](LICENSE)，允许在许可证条件下使用、修改和分发。模型服务、第三方依赖与外部素材遵循各自的条款；源码许可证不代替这些内容的使用授权。
+
+Copyright © 2026 YuhaoYeSteve.
+
+<p align="center"><a href="#quick-start">开始生成第一份数据 →</a></p>

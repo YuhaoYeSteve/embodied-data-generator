@@ -1,0 +1,46 @@
+name: Bug report / 问题反馈
+description: Report a reproducible problem in the workbench or pipeline / 反馈可复现的问题
+title: "[Bug] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the problem in English or Chinese. Please remove credentials, signed URLs, personal data, and private media from examples and logs.
+        支持中文或英文反馈。请先移除凭证、带签名的链接、个人信息和私有素材。
+  - type: textarea
+    id: problem
+    attributes:
+      label: What happened? / 出现了什么问题？
+      description: Include the expected behavior and what actually happened.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce / 复现步骤
+      description: Share the smallest example that reproduces the issue, using a built-in template or sanitized input if possible.
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Run mode / 运行模式
+      options:
+        - Simulation / 模拟
+        - Real model / 真实模型
+        - Both / 两者都有
+        - Other or unknown / 其他或不确定
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment / 运行环境
+      description: Include commit or version, OS, Python, FFmpeg, and browser; include the model family and resolution if relevant. Do not include account identifiers or credentials.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized logs or screenshots / 脱敏日志或截图
+      description: Optional error messages or screenshots that help explain the problem. Do not upload raw runtime directories.

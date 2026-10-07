@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="350" viewBox="0 0 920 350" role="img" aria-labelledby="title desc">
+  <title id="title">GitHub star history for YuhaoYeSteve/embodied-data-generator</title>
+  <desc id="desc">Daily snapshots from GitHub API, UTC. First observation · future daily samples appear here. Latest: 0 stars on 2026-10-07. No earlier history is inferred.</desc>
+  <rect x="0.5" y="0.5" width="919" height="349" rx="16" fill="#111b2a" stroke="#2a384b"/>
+  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif">
+    <text x="36" y="37" fill="#55d6be" font-size="11" font-weight="700" letter-spacing="2">COMMUNITY PULSE</text>
+    <text x="36" y="72" fill="#f2f6fa" font-size="25" font-weight="700">Star history</text>
+    <text x="36" y="96" fill="#a5b4c7" font-size="12">First observation · future daily samples appear here</text>
+    <text x="884" y="36" text-anchor="end" fill="#a5b4c7" font-size="11">LATEST SAMPLED STARS</text>
+    <text x="884" y="80" text-anchor="end" fill="#55d6be" font-size="38" font-weight="700">0</text>
+    <g fill="#a5b4c7" font-size="11"><line x1="70" y1="267" x2="850" y2="267" stroke="#263446"/><text x="54" y="271" text-anchor="end">0</text><line x1="70" y1="196.0" x2="850" y2="196.0" stroke="#263446"/><text x="54" y="200.0" text-anchor="end">1</text><line x1="70" y1="125" x2="850" y2="125" stroke="#263446"/><text x="54" y="129" text-anchor="end">2</text><text x="460" y="291" text-anchor="middle">2026-10-07</text></g>
+    <circle cx="460.00" cy="267.00" r="4" fill="#55d6be" stroke="#111b2a" stroke-width="2"/>
+    <line x1="36" y1="309" x2="884" y2="309" stroke="#263446"/>
+    <text x="36" y="332" fill="#a5b4c7" font-size="11">Daily snapshots · UTC · Source: GitHub API</text>
+    <text x="884" y="332" text-anchor="end" fill="#a5b4c7" font-size="11">First sampled 2026-10-07</text>
+  </g>
+</svg>
