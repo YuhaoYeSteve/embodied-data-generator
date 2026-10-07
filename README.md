@@ -1,4 +1,17 @@
-# 具身智能数据生成器
+<div align="center">
+  <h1>具身智能数据生成器</h1>
+  <p><strong>任务规划 · 连续视频 · 自动质检 · 可追溯数据</strong></p>
+  <p><a href="README.md">简体中文</a> · <a href="README.en.md">English</a></p>
+  <p>
+    <img src="docs/assets/badges/python.svg" alt="Python 3.9+" height="28">
+    <img src="docs/assets/badges/flask.svg" alt="Flask 3.x" height="28">
+    <img src="docs/assets/badges/seedance.svg" alt="Seedance 2.0 / 2.5" height="28">
+    <img src="docs/assets/badges/ffmpeg.svg" alt="FFmpeg Media" height="28">
+  </p>
+  <p><a href="#quick-start">快速开始</a> · <a href="#configuration">配置</a> · <a href="#workflow">生成流程</a> · <a href="#architecture">系统架构</a></p>
+</div>
+
+---
 
 将自然语言任务或结构化脚本转换为连续视频、任务标签和可追溯的生成记录。面向物体操作、人际交互与协作等场景，支持从任务规划、分段生成、自动质检到成片管理的完整流程。
 
@@ -25,6 +38,8 @@
 
 新建页面将 **创作输入**（任务描述、目标、多样性要求、模板及参考素材）与 **视频参数**（型号、分辨率、总时长、段长、数量、并发）分组。草稿保存在当前浏览器；切换页面不会中断已提交任务。
 
+<a id="quick-start"></a>
+
 ## 快速开始：本地模拟
 
 需要 Python 3.9+、FFmpeg 和 FFprobe。当前使用 POSIX 文件锁，适合 macOS / Linux；Windows 可在 WSL 中运行。请先通过系统包管理器安装 FFmpeg，并确保 `ffmpeg`、`ffprobe` 在 PATH 中。
@@ -45,6 +60,8 @@ python -B studio_server.py --simulate --port 8790 --open
 模拟模式会生成带 `SIMULATION` 标记的本地测试媒体，覆盖脚本、队列、质检和合成流程，**不需要凭证，也不调用模型**。模拟检查结果仅用于验证软件流程。
 
 默认模拟数据写入 `.studio-simulation/`。可通过 `--data-dir` 指定其他目录；模拟与真实运行的数据目录不能混用。
+
+<a id="configuration"></a>
 
 ## 配置真实生成
 
@@ -75,6 +92,8 @@ python -B studio_server.py --open
 ```
 
 打开 [真实生成工作台](http://127.0.0.1:8787/)。服务仅监听本机，默认数据目录为 `.studio/`。真实脚本扩写、视频生成和自动质检会调用模型；重启服务会恢复已开始的任务，已暂停任务保持暂停。
+
+<a id="workflow"></a>
 
 ## 生成流程
 
@@ -109,6 +128,8 @@ flowchart TD
 | Seedance 2.5 | 480P、720P、1080P | 4–30 秒整数 | 30 秒 |
 
 工作台完整脚本包含 2–20 段、总计至少 60 秒；上限随模型与段长变化。场景扩写提供 60 / 90 / 120 / 180 秒选项。例如，60 秒使用 2.0 默认拆为 4 × 15 秒，使用 2.5 默认拆为 2 × 30 秒。切换模型不会静默截短已有脚本，不兼容的内容需要调整。
+
+<a id="architecture"></a>
 
 ## 系统架构
 
