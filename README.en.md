@@ -33,6 +33,24 @@ The web interface and built-in script planner currently use Chinese.
 
 For page navigation, drafts, reference media, and task recovery, see the [Workspace guide (Chinese)](WEB_STUDIO.md).
 
+## Workspace preview
+
+Captured in a dedicated demo workspace, without customer tasks or customer media.
+
+**Generation center · Creative inputs and video parameters in separate groups**
+
+![Generation center](docs/assets/screenshots/generation-center.png)
+
+**Output library · Preview, download, and reuse generated results**
+
+![Output library](docs/assets/screenshots/output-library.png)
+
+## Original demo video
+
+A first-person geometric-object sorting demo made specifically for this project. Seedance 2.5 · 60 seconds · 480p · 4 continuous segments; automated visual, action, and audio checks passed.
+
+https://github.com/user-attachments/assets/e7a996de-332b-4fb0-b21c-3682f62977a5
+
 ## Core capabilities
 
 - **Task-to-script planning:** Describe the environment, goals, objects, and actions to generate multiple task variants, or start from a template or imported JSON.

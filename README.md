@@ -31,6 +31,24 @@
 
 页面操作、草稿、参考素材和任务恢复详见 [工作台操作指南](WEB_STUDIO.md)。
 
+## 系统预览
+
+以下截图来自独立演示环境，未使用客户任务或客户素材。
+
+**生成中心 · 分组配置创作输入与视频参数**
+
+![生成中心](docs/assets/screenshots/generation-center.png)
+
+**成品库 · 预览、下载并复用生成结果**
+
+![成品库](docs/assets/screenshots/output-library.png)
+
+## 全新演示视频
+
+专为项目展示制作的第一人称几何物体整理示例。Seedance 2.5 · 60 秒 · 480p · 4 段连续生成；画面、动作与声音自动检查通过。
+
+https://github.com/user-attachments/assets/e7a996de-332b-4fb0-b21c-3682f62977a5
+
 ## 核心能力
 
 - **从任务生成脚本**：输入环境、目标、物体和动作要求，扩写为多个任务变体，也可使用模板或导入 JSON。
