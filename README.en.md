@@ -267,10 +267,6 @@ Contributions are welcome: reusable task templates, model adapters, continuity a
   </picture>
 </a>
 
-Rendered with the [official Star History chart renderer](https://github.com/star-history/star-history), using its classic hand-drawn style with light and dark themes. Data consists of real daily UTC samples from GitHub; no growth is invented when there are no Stars. Community statistics and the CI badge continue to update daily or [on demand](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml).
-
-Rendering runs inside this repository’s GitHub Actions, so private repositories work without sharing a token with an external chart service. See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream code and embedded chart font licenses.
-
 <a id="license"></a>
 
 ## License

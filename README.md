@@ -265,10 +265,6 @@ node --test tests/test_studio_frontend.js tests/test_workspace_core.js tests/tes
   </picture>
 </a>
 
-图表使用 [Star History 官方开源绘图器](https://github.com/star-history/star-history)，保留经典手绘风格并自动适配深浅主题。数据来自 GitHub 的真实 UTC 每日采样；尚无 Star 时不会补造增长曲线。社区统计和 CI 徽章仍会每日更新，也可[手动刷新](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml)。
-
-渲染在仓库的 GitHub Actions 内完成，私有仓库也可展示，无需向外部图表服务提供 Token。 第三方代码与图表内嵌字体的授权见 [第三方说明](THIRD_PARTY_NOTICES.md)。
-
 <a id="license"></a>
 
 ## 许可证
