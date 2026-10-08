@@ -24,7 +24,7 @@ jobs:
        github.event.workflow_run.event != 'pull_request' &&
        github.event.workflow_run.event != 'pull_request_target')
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     permissions:
       contents: write
       issues: read
@@ -34,19 +34,53 @@ jobs:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           ref: main
+          persist-credentials: false
+      - name: Check out the official Star History renderer
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          repository: star-history/star-history
+          ref: 608d0e39be441665c01cd6ac1fd01ca5ec1eaf39
+          path: .star-history-upstream
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /shared/packages/
+            /backend/utils.ts
+            /package.json
+            /LICENSE
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: tools/star-history/package-lock.json
+          package-manager-cache: false
+      - name: Install locked renderer dependencies
+        run: npm ci --ignore-scripts --no-audit --no-fund --prefix tools/star-history
       - name: Test statistics generator
         run: python3 -B -m unittest discover -s tests -p test_repo_stats.py
       - name: Sample GitHub metadata
         env:
           GH_TOKEN: ${{ github.token }}
         run: python3 -B scripts/update_repo_stats.py --repo "$GITHUB_REPOSITORY"
-      - name: Commit generated assets only
+      - name: Render the official light and dark Star History charts
         run: |
-          git add -- docs/assets/community/stats.json docs/assets/community/history.json docs/assets/community/stars.svg docs/assets/community/forks.svg docs/assets/community/watchers.svg docs/assets/community/issues.svg docs/assets/community/pull-requests.svg docs/assets/community/star-history.svg docs/assets/community/ci.svg
+          node tools/star-history/node_modules/tsx/dist/cli.mjs tools/star-history/render.mts \
+            --upstream "$GITHUB_WORKSPACE/.star-history-upstream" \
+            --history "$GITHUB_WORKSPACE/docs/assets/community/history.json" \
+            --output "$GITHUB_WORKSPACE/docs/assets/community"
+      - name: Check renderer output
+        env:
+          STAR_HISTORY_UPSTREAM: ${{ github.workspace }}/.star-history-upstream
+        run: node --test tools/star-history/render.test.mjs
+      - name: Commit generated assets only
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add -- docs/assets/community/stats.json docs/assets/community/history.json docs/assets/community/stars.svg docs/assets/community/forks.svg docs/assets/community/watchers.svg docs/assets/community/issues.svg docs/assets/community/pull-requests.svg docs/assets/community/star-history.svg docs/assets/community/star-history-dark.svg docs/assets/community/ci.svg
           if git diff --cached --quiet; then
             exit 0
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git commit -m 'docs: refresh repository statistics'
-          git push origin HEAD:main
+          git -c credential.helper= -c "credential.helper=!gh auth git-credential" push origin HEAD:main

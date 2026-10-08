@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate README badges and a star chart from authenticated GitHub metadata.
+"""Collect README badges and history data from authenticated GitHub metadata.
 
 Run with gh authenticated locally, or GH_TOKEN set by GitHub Actions. Credentials
 are never passed in command arguments or written to the generated assets.
@@ -7,7 +7,6 @@ are never passed in command arguments or written to the generated assets.
 
 import argparse
 import json
-import math
 import re
 import subprocess
 from datetime import date, datetime, timezone
@@ -182,53 +181,6 @@ def render_badge(label, value, color, sampled_at):
 '''
 
 
-def render_history(history):
-    samples = history["samples"]
-    first, last = samples[0], samples[-1]
-    start, end = date.fromisoformat(first["date"]), date.fromisoformat(last["date"])
-    span = (end - start).days
-    ceiling = max(2, math.ceil(max(s["stars"] for s in samples) * 1.15))
-    points = []
-    for sample in samples:
-        x = 460 if span == 0 else 70 + (date.fromisoformat(sample["date"]) - start).days / span * 780
-        y = 267 - sample["stars"] / ceiling * 142
-        points.append((x, y))
-    grid = []
-    for fraction in (0, 0.5, 1):
-        y = 267 - fraction * 142
-        grid.append(f'<line x1="70" y1="{y}" x2="850" y2="{y}" stroke="#263446"/>')
-        grid.append(f'<text x="54" y="{y + 4}" text-anchor="end">{ceiling * fraction:g}</text>')
-    trend = ""
-    if len(points) > 1:
-        coordinates = " ".join(f"{x:.2f},{y:.2f}" for x, y in points)
-        trend = f'<polyline points="{coordinates}" fill="none" stroke="#55d6be" stroke-width="3" stroke-linejoin="round"/>'
-    dots = "".join(f'<circle cx="{x:.2f}" cy="{y:.2f}" r="4" fill="#55d6be" stroke="#111b2a" stroke-width="2"/>' for x, y in points)
-    if len(points) == 1:
-        dates = f'<text x="460" y="291" text-anchor="middle">{first["date"]}</text>'
-        caption = "First observation · future daily samples appear here"
-    else:
-        dates = f'<text x="70" y="291">{first["date"]}</text><text x="850" y="291" text-anchor="end">{last["date"]}</text>'
-        caption = f'{len(samples)} observed days · totals may rise or fall'
-    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="920" height="350" viewBox="0 0 920 350" role="img" aria-labelledby="title desc">
-  <title id="title">GitHub star history for {escape(history["repository"])}</title>
-  <desc id="desc">Daily snapshots from GitHub API, UTC. {escape(caption)}. Latest: {last["stars"]} stars on {last["date"]}. No earlier history is inferred.</desc>
-  <rect x="0.5" y="0.5" width="919" height="349" rx="16" fill="#111b2a" stroke="#2a384b"/>
-  <g font-family="-apple-system,BlinkMacSystemFont,Segoe UI,Arial,sans-serif">
-    <text x="36" y="37" fill="#55d6be" font-size="11" font-weight="700" letter-spacing="2">COMMUNITY PULSE</text>
-    <text x="36" y="72" fill="#f2f6fa" font-size="25" font-weight="700">Star history</text>
-    <text x="36" y="96" fill="#a5b4c7" font-size="12">{escape(caption)}</text>
-    <text x="884" y="36" text-anchor="end" fill="#a5b4c7" font-size="11">LATEST SAMPLED STARS</text>
-    <text x="884" y="80" text-anchor="end" fill="#55d6be" font-size="38" font-weight="700">{last["stars"]}</text>
-    <g fill="#a5b4c7" font-size="11">{"".join(grid)}{dates}</g>
-    {trend}{dots}
-    <line x1="36" y1="309" x2="884" y2="309" stroke="#263446"/>
-    <text x="36" y="332" fill="#a5b4c7" font-size="11">Daily snapshots · UTC · Source: GitHub API</text>
-    <text x="884" y="332" text-anchor="end" fill="#a5b4c7" font-size="11">First sampled {first["date"]}</text>
-  </g>
-</svg>
-'''
-
-
 def write_assets(output, snapshot):
     history_path = output / "history.json"
     previous = json.loads(history_path.read_text()) if history_path.exists() else None
@@ -236,7 +188,6 @@ def write_assets(output, snapshot):
     assets = {
         "stats.json": json.dumps(snapshot, indent=2) + "\n",
         "history.json": json.dumps(history, indent=2) + "\n",
-        "star-history.svg": render_history(history),
     }
     for key, label, color in BADGES:
         filename = "pull-requests.svg" if key == "pull_requests" else key + ".svg"

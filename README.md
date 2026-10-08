@@ -257,9 +257,17 @@ node --test tests/test_studio_frontend.js tests/test_workspace_core.js tests/tes
 
 ## Star History
 
-<p align="center"><a href="https://github.com/YuhaoYeSteve/embodied-data-generator/stargazers"><img src="docs/assets/community/star-history.svg" alt="Star 总数的每日采样历史" width="960"></a></p>
+<a href="https://www.star-history.com/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/community/star-history-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/community/star-history.svg">
+    <img alt="Star History Chart" src="docs/assets/community/star-history.svg" width="800">
+  </picture>
+</a>
 
-社区徽章和增长图使用 GitHub 的真实统计，每日自动更新，也可[手动刷新](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml)。图表从首次采样开始记录 Star 总数；CI 徽章反映最近一次实际测试的结果。统计资产保存在仓库内，私有仓库也可以正常显示。
+图表使用 [Star History 官方开源绘图器](https://github.com/star-history/star-history)，保留经典手绘风格并自动适配深浅主题。数据来自 GitHub 的真实 UTC 每日采样；尚无 Star 时不会补造增长曲线。社区统计和 CI 徽章仍会每日更新，也可[手动刷新](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml)。
+
+渲染在仓库的 GitHub Actions 内完成，私有仓库也可展示，无需向外部图表服务提供 Token。 第三方代码与图表内嵌字体的授权见 [第三方说明](THIRD_PARTY_NOTICES.md)。
 
 <a id="license"></a>
 

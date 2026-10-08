@@ -160,17 +160,16 @@ class RepoStatsTests(unittest.TestCase):
             with self.subTest(history=history), self.assertRaises(ValueError):
                 stats.update_history(history, snapshot)
 
-    def test_single_point_chart_is_valid_svg_with_honest_source_and_no_trend_line(self):
+    def test_collector_preserves_charts_owned_by_official_renderer(self):
         snapshot = stats.parse_snapshot(REPO, response(), STAMP)
-        history = stats.update_history(None, snapshot)
-        svg = stats.render_history(history)
-        root = ET.fromstring(svg)
-        self.assertEqual(root.tag, "{http://www.w3.org/2000/svg}svg")
-        self.assertIn("2026-10-07", svg)
-        self.assertIn("GitHub API", svg)
-        self.assertIn("Daily snapshots", svg)
-        self.assertIn("First observation", svg)
-        self.assertEqual(len(root.findall('.//{http://www.w3.org/2000/svg}polyline')), 0)
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            official = '<svg xmlns="http://www.w3.org/2000/svg"><title>Star History</title></svg>'
+            for name in ("star-history.svg", "star-history-dark.svg"):
+                (target / name).write_text(official)
+            stats.write_assets(target, snapshot)
+            for name in ("star-history.svg", "star-history-dark.svg"):
+                self.assertEqual((target / name).read_text(), official)
 
     def test_asset_generation_keeps_real_history_and_only_expected_files(self):
         snapshot = stats.parse_snapshot(REPO, response(), STAMP)
@@ -179,7 +178,7 @@ class RepoStatsTests(unittest.TestCase):
             stats.write_assets(target, snapshot)
             self.assertEqual({p.name for p in target.iterdir()}, {
                 "stats.json", "history.json", "stars.svg", "forks.svg", "watchers.svg",
-                "issues.svg", "pull-requests.svg", "star-history.svg", "ci.svg"})
+                "issues.svg", "pull-requests.svg", "ci.svg"})
             stats.write_assets(target, snapshot)
             history = json.loads((target / "history.json").read_text())
             self.assertEqual(len(history["samples"]), 1)

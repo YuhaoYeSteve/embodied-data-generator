@@ -259,9 +259,17 @@ Contributions are welcome: reusable task templates, model adapters, continuity a
 
 ## Star History
 
-<p align="center"><a href="https://github.com/YuhaoYeSteve/embodied-data-generator/stargazers"><img src="docs/assets/community/star-history.svg" alt="Daily samples of total GitHub Stars" width="960"></a></p>
+<a href="https://www.star-history.com/">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/assets/community/star-history-dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="docs/assets/community/star-history.svg">
+    <img alt="Star History Chart" src="docs/assets/community/star-history.svg" width="800">
+  </picture>
+</a>
 
-Community badges and the chart use real GitHub statistics, refreshed daily or [on demand](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml). The chart tracks total Stars from the first recorded sample; the CI badge reports the latest actual test run. Assets are stored in the repository, so they also work for private repositories.
+Rendered with the [official Star History chart renderer](https://github.com/star-history/star-history), using its classic hand-drawn style with light and dark themes. Data consists of real daily UTC samples from GitHub; no growth is invented when there are no Stars. Community statistics and the CI badge continue to update daily or [on demand](https://github.com/YuhaoYeSteve/embodied-data-generator/actions/workflows/repo-stats.yml).
+
+Rendering runs inside this repository’s GitHub Actions, so private repositories work without sharing a token with an external chart service. See [third-party notices](THIRD_PARTY_NOTICES.md) for the upstream code and embedded chart font licenses.
 
 <a id="license"></a>
 

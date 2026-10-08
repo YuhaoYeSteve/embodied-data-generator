@@ -66,3 +66,6 @@ htmlcov/
 node_modules/
 *.swp
 *.tmp
+
+# Pinned upstream renderer checkout used by README statistics
+.star-history-upstream/

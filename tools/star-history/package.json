@@ -1,0 +1,23 @@
+{
+  "name": "embodied-data-generator-star-history",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Offline adapter for the pinned, unmodified official Star History chart renderer",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test render.test.mjs"
+  },
+  "dependencies": {
+    "d3-axis": "2.1.0",
+    "d3-scale": "3.3.0",
+    "d3-selection": "2.0.0",
+    "d3-shape": "2.1.0",
+    "dayjs": "1.11.13",
+    "jsdom": "20.0.2",
+    "lodash": "4.18.1",
+    "tsx": "4.23.15"
+  }
+}
