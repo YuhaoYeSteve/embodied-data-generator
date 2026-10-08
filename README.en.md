@@ -47,9 +47,9 @@ Captured in a dedicated demo workspace, without customer tasks or customer media
 
 ## Original demo video
 
-A first-person geometric-object sorting demo made specifically for this project. Seedance 2.5 · 60 seconds · 480p · 4 continuous segments; automated visual, action, and audio checks passed.
+An ego-view household chores demo made specifically for this project: tidying cups and wiping a kitchen countertop. Seedance 2.5 · 60 seconds · 480p · 2 continuous segments; automated visual, action, and audio checks passed.
 
-https://github.com/user-attachments/assets/e7a996de-332b-4fb0-b21c-3682f62977a5
+https://github.com/user-attachments/assets/0d845b8c-3f64-4fc8-8f4d-5faac4cd029e
 
 ## Core capabilities
 

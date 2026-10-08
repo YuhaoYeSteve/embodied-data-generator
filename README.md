@@ -45,9 +45,9 @@
 
 ## 全新演示视频
 
-专为项目展示制作的第一人称几何物体整理示例。Seedance 2.5 · 60 秒 · 480p · 4 段连续生成；画面、动作与声音自动检查通过。
+专为项目展示制作的 Ego 第一人称家务示例：收拢杯子并擦净厨房台面。Seedance 2.5 · 60 秒 · 480p · 2 段连续生成；画面、动作与声音自动检查通过。
 
-https://github.com/user-attachments/assets/e7a996de-332b-4fb0-b21c-3682f62977a5
+https://github.com/user-attachments/assets/0d845b8c-3f64-4fc8-8f4d-5faac4cd029e
 
 ## 核心能力
 
