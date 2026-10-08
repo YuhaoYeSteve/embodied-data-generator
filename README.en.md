@@ -1,7 +1,7 @@
 <div align="center">
   <img src="docs/assets/project-banner.svg" alt="Embodied Intelligence Data Generator: plan, generate, verify and export" width="1120">
   <h1>Embodied Intelligence Data Generator</h1>
-  <p><strong>Turn task descriptions into continuous video and traceable embodied data.</strong></p>
+  <p><strong>Build continuous ego videos beyond a model’s 15- or 30-second limit.</strong></p>
   <p><a href="README.md">简体中文</a> · <a href="README.en.md">English</a></p>
   <p>
     <a href="LICENSE"><img src="docs/assets/badges/license.svg" alt="License: Apache-2.0" height="28"></a>
@@ -25,7 +25,7 @@
 
 ---
 
-Turn natural-language tasks or structured scripts into continuous videos, task labels, and traceable generation records. Designed for object manipulation, human interaction, and collaborative scenarios, the project covers the full workflow from task planning and segment generation to automated quality checks and finished-video management.
+A continuous long-form video data generator for embodied intelligence. Its core advantage is an engineered continuation workflow that combines individual 15-second or 30-second generations into videos spanning minutes. Household chores, object manipulation, and human collaboration can unfold from start to finish, with scripts, task labels, and traceable generation records retained.
 
 The project provides a local web workspace with built-in **Seedance 2.0 / Seedance 2.5** video-generation adapters. Scenarios and scripts can be reused, edited, and extended. Supporting another model requires implementing its capability validation and API adapter.
 
@@ -47,15 +47,15 @@ Captured in a dedicated demo workspace, without customer tasks or customer media
 
 ## Original demo video
 
-An ego-view household chores demo made specifically for this project: tidying cups and wiping a kitchen countertop. Seedance 2.5 · 60 seconds · 480p · 2 continuous segments; automated visual, action, and audio checks passed.
+An ego-view household chores demo made specifically for this project: tidying cups and wiping a kitchen countertop. Seedance 2.5 · 60 seconds · 480p, generated as 2 × 30-second continuations and assembled into a complete task beyond the single-call limit; automated visual, action, and audio checks passed.
 
 https://github.com/user-attachments/assets/0d845b8c-3f64-4fc8-8f4d-5faac4cd029e
 
 ## Core capabilities
 
+- **Continuous video beyond a single generation:** Task planning, continuation conditioned on the previous original clip and its observed end state, automated quality checks, and audiovisual timeline assembly extend 15-second or 30-second segment capabilities into 60-second, 120-second, and longer videos with continuous actions and natural transitions across the task.
 - **Task-to-script planning:** Describe the environment, goals, objects, and actions to generate multiple task variants, or start from a template or imported JSON.
 - **Model-aware parameter validation:** A shared capability catalog defines models, resolutions, and segment durations, with validation in both frontend controls and backend submission.
-- **Continuous segment generation:** Each segment uses the preceding segment's original video and the actual end state recorded by automated review. Segments run sequentially within a video; multiple videos can run concurrently.
 - **Automated quality checks:** Evaluate visual continuity, action completeness, and audio consistency separately. Regeneration and rechecking follow bounded retry policies, without manual acceptance of each segment.
 - **Recoverable task management:** Persist task IDs, candidate segments, and review records, with pause, resume, failure retry, and re-running exports.
 - **Informational cost estimates:** Display estimated and unknown costs without budget approval or budget-based blocking of workspace tasks.
@@ -129,6 +129,8 @@ Open the [real-generation workspace](http://127.0.0.1:8787/). The service listen
 
 ## Generation workflow
 
+Continuity is established during generation. Global constraints keep participants, objects, surroundings, and viewpoint consistent; each segment starts from the preceding original video and its observed end state, continuing the remaining actions. Visual, action, and audio checks gate progression, with bounded regeneration or rechecking when needed. Accepted segments are then assembled on a unified timeline and checked for audiovisual alignment.
+
 ```mermaid
 flowchart TD
     A[Task description / template / JSON] --> B[Plan segments, actions, and expected states]
@@ -159,7 +161,7 @@ These are the project's built-in parameter constraints. Actual availability also
 | Seedance 2.0 | 480P, 720P, 1080P, 4K | 4–15 seconds, integer values | 15 seconds |
 | Seedance 2.5 | 480P, 720P, 1080P | 4–30 seconds, integer values | 30 seconds |
 
-A complete workspace script contains 2–20 segments and totals at least 60 seconds. The upper limit depends on the model and segment duration. Scenario expansion offers 60 / 90 / 120 / 180-second options. For example, a 60-second video defaults to 4 × 15-second segments with 2.0, or 2 × 30-second segments with 2.5. Switching models never silently truncates an existing script; incompatible content must be adjusted.
+A complete workspace script contains 2–20 segments and totals at least 60 seconds. The upper limit depends on the model and segment duration. Scenario expansion offers 60 / 90 / 120 / 180-second options. For example, a 60-second video defaults to 4 × 15-second segments with 2.0, or 2 × 30-second segments with 2.5; a 120-second video uses 8 × 15-second or 4 × 30-second segments, respectively. Every call stays within the model’s segment limit, while continuation extends the final video duration. Switching models never silently truncates an existing script; incompatible content must be adjusted.
 
 <a id="architecture"></a>
 
